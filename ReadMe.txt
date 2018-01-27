@@ -1,6 +1,7 @@
 
 [[ How to install ]]
 1.clone https://github.com/pokphoenix/product.git
+(or download from https://github.com/pokphoenix/product)
 2.goto directory   
 3.run command   composer install
 4. copy .env.example .env

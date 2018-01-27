@@ -75,7 +75,7 @@
                       <option value=""></option>
                         @if(isset($products))
                           @foreach($products as $product)
-                          <option value="{{ $product['ProductCode'] }}" @if(isset($edit)&&$data['ProductCode']==$product['ProductCode']) selected=""  @endif > {{ $product['ProductName']." ".$product['ProductName'] }}</option>
+                          <option value="{{ $product['ProductCode'] }}" @if(isset($edit)&&$data['ProductCode']==$product['ProductCode']) selected=""  @endif > {{ $product['ProductName'] }}</option>
                           @endforeach
                         @endif
                     </select>
