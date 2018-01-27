@@ -10,20 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/clear-cache', function() {
-    $exitCode = Artisan::call('config:clear');
-    // return what you want
-});
-Route::get('/logout',function(){
-	Auth::logout();
-	redirect('/');
-});
-Route::get('error',function(){
-	$domainId = Auth()->user()->recent_domain;
-	return view('main.widgets.error',compact('domainId'));
-});
-Route::get('notfound',function(){
-	return view('front.error.error');
+
+Route::get('/',function(){
+	return redirect('/customer');
 });
 
 Route::resource('/customer', 'CustomerController');
