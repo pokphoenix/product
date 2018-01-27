@@ -66,7 +66,7 @@ class CustomerController extends Controller
         $customer['LastName'] = $post['last_name'];
         $customer['IDCrad'] = $post['id_card'];
         $customer['Tel'] = $post['tel'];
-        $customer['IsActive'] = 1;
+        $customer['IsActive'] = isset($post['is_active']) ? 1 : 0 ;
         Customer::create($customer);
         return redirect($this->route)->with('success','Create Success');
     }
@@ -92,7 +92,7 @@ class CustomerController extends Controller
         $customer['LastName'] = $post['last_name'];
         $customer['IDCrad'] = $post['id_card'];
         $customer['Tel'] = $post['tel'];
-        $customer['IsActive'] = 1;
+        $customer['IsActive'] = isset($post['is_active']) ? 1 : 0 ;
 
 
 
@@ -108,6 +108,16 @@ class CustomerController extends Controller
         Customer::where('CustomerCode',$id)->delete();
        
         return redirect($this->route)->with('success','Delete Success');
+    }
+
+    public function active(Request $request,$id){
+        $customer = Customer::where('CustomerCode',$id)->first();
+        $isActive = 1 ;
+        if ($customer->IsActive){
+            $isActive = 0 ;
+        }
+        Customer::where('CustomerCode',$id)->update(['IsActive'=>$isActive]);
+        return redirect($this->route)->with('success','Update Success');
     }
 
     

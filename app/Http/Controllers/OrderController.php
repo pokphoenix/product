@@ -50,7 +50,7 @@ class OrderController extends Controller
                 ->join('mas_customer as mc','o.CustomerCode','mc.CustomerCode')
                 ->join('ops_orderdetail as ord','ord.OrderCode','o.OrderCode')
                 ->join('mas_products as mp','ord.ProductCode','mp.ProductCode')
-                ->select(DB::raw('o.OrderCode,o.OrderDate,mp.ProductName,mc.FistName,mc.LastName,mc.IDCrad,ord.QTY'))
+                ->select(DB::raw('o.OrderCode,o.OrderDate,mp.ProductName,mc.FistName,mc.LastName,mc.IDCrad,ord.QTY,o.IsActive'))
                 ->get();
 
         return view($this->view.'.index',compact('tables','title','route'));
@@ -78,7 +78,7 @@ class OrderController extends Controller
         $order['OrderCode'] = Order::GetID() ;
         $order['CustomerCode'] = $post['customer_id'];
         $order['OrderDate'] = Carbon::now();
-        $order['IsActive'] = 1;
+        $order['IsActive'] = isset($post['is_active']) ? 1 : 0 ;
         Order::create($order);
 
         $product['OrderCode'] = $order['OrderCode'];
@@ -101,7 +101,7 @@ class OrderController extends Controller
         $data = Order::from('ops_order as o')
                 ->where('o.OrderCode',$id)
                 ->join('ops_orderdetail as ord','ord.OrderCode','o.OrderCode')
-                ->select(DB::raw('o.OrderCode,o.CustomerCode,ord.ProductCode,ord.QTY'))
+                ->select(DB::raw('o.OrderCode,o.CustomerCode,ord.ProductCode,ord.QTY,o.IsActive'))
                 ->first();
         return view($this->view.'.create',compact('title','route','edit','action','data','customers','products'));
     }
@@ -114,10 +114,10 @@ class OrderController extends Controller
                 ->withError($validator->errors())->withInput();
         }
 
-        
+
         $order['CustomerCode'] = $post['customer_id'];
         $order['OrderDate'] = Carbon::now();
-        $order['IsActive'] = 1;
+        $order['IsActive'] = isset($post['is_active']) ? 1 : 0 ;
         Order::where('OrderCode',$id)->update($order);
 
         $product['ProductCode'] = $post['product_id'];
@@ -136,6 +136,15 @@ class OrderController extends Controller
         return redirect($this->route)->with('success','Delete Success');
     }
 
+    public function active(Request $request,$id){
+        $order = Order::where('OrderCode',$id)->first();
+        $isActive = 1 ;
+        if ($order->IsActive){
+            $isActive = 0 ;
+        }
+        Order::where('OrderCode',$id)->update(['IsActive'=>$isActive]);
+        return redirect($this->route)->with('success','Update Success');
+    }
     
      private function validator($data)
     {

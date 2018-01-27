@@ -66,6 +66,10 @@
                     <label >Description</label>
                     <input type="text" class="form-control" id="product_description" name="product_description" placeholder="First Name" value="{{ isset($edit) ? $data['ProductDescription'] : old('ProductDescription') }}">
                   </div>
+                  <div class="form-group">
+                    <label >Active</label>
+                    <input type="checkbox" id="is_active" name="is_active" placeholder="Amount" @if(isset($edit) && ($data['IsActive'])) checked="" @endif >
+                  </div>
                 </div>
               </div>
              

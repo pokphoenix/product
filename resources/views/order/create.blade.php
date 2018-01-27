@@ -84,6 +84,10 @@
                     <label >Amount</label>
                     <input type="text" class="form-control" id="amount" name="amount" placeholder="Amount" value="{{ isset($edit) ? $data['QTY'] : old('QTY') }}">
                   </div>
+                  <div class="form-group">
+                    <label >Active</label>
+                    <input type="checkbox" id="is_active" name="is_active" placeholder="Amount" @if(isset($edit) && ($data['IsActive'])) checked="" @endif >
+                  </div>
                 </div>
               </div>
              

@@ -74,7 +74,10 @@
                     <label >Telephone</label>
                     <input type="text" class="form-control" id="tel" name="tel" placeholder="Telephone" value="{{ isset($edit) ? $data['Tel'] : old('Tel') }}">
                   </div>
-                 
+                  <div class="form-group">
+                    <label >Active</label>
+                    <input type="checkbox" id="is_active" name="is_active" placeholder="Amount" @if(isset($edit) && ($data['IsActive'])) checked="" @endif >
+                  </div>
                 </div>
               </div>
              

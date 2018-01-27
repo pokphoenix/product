@@ -31,7 +31,7 @@
     	<div class="box">
            <div class="box-header">
               <h3 class="box-title"></h3>
-               <a href=" {{ url($route.'/create') }}" class="btn btn-success btn-sm"> <i class="fa fa-plus"></i>new</a>
+               <a href=" {{ url($route.'/create') }}" class="btn btn-primary btn-sm"> <i class="fa fa-plus"></i> new</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -60,6 +60,7 @@
                   <td>{{ ($table['IsActive']) ? 'Active' : 'Non Active' }}</td>
                   <td>  
                       <a class="btn btn-default" style="float: left; margin-right: 5px;" href="{{ url($route.'/'.$table['CustomerCode'].'/edit') }}" ><i class="fa fa-edit" ></i></a>
+                      <a class="btn btn-default" style="float: left; margin-right: 5px;" href="{{ url($route.'/'.$table['CustomerCode'].'/active') }}" ><i class="fa fa-{{ ($table['IsActive'])? 'close' : 'check' }}" title="set to {{ ($table['IsActive'])? 'non active' : 'active' }}" ></i></a>
 
                       <form class="del-form" method="post" action="{{ url($route.'/'.$table['CustomerCode']) }}">
                         <input type="hidden" name="_method" value="delete" />

@@ -64,7 +64,7 @@ class ProductController extends Controller
         $customer['ProductCode'] = Product::GetID() ;
         $customer['ProductName'] = $post['product_name'];
         $customer['ProductDescription'] = $post['product_description'];
-        $customer['IsActive'] = 1;
+        $customer['IsActive'] = isset($post['is_active']) ? 1 : 0 ;
         Product::create($customer);
         return redirect($this->route)->with('success','Create Success');
     }
@@ -88,7 +88,7 @@ class ProductController extends Controller
 
         $customer['ProductName'] = $post['product_name'];
         $customer['ProductDescription'] = $post['product_description'];
-        $customer['IsActive'] = 1;
+        $customer['IsActive'] = isset($post['is_active']) ? 1 : 0 ;
 
         Product::where('ProductCode',$id)->update( $customer);
       
@@ -102,6 +102,16 @@ class ProductController extends Controller
         Product::where('ProductCode',$id)->delete();
        
         return redirect($this->route)->with('success','Delete Success');
+    }
+
+    public function active(Request $request,$id){
+        $product = Product::where('ProductCode',$id)->first();
+        $isActive = 1 ;
+        if ($product->IsActive){
+            $isActive = 0 ;
+        }
+        Product::where('ProductCode',$id)->update(['IsActive'=>$isActive]);
+        return redirect($this->route)->with('success','Update Success');
     }
 
     
